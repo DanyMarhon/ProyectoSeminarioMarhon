@@ -1,4 +1,5 @@
-﻿using ProyectoSeminario.Entidades.Entidades;
+﻿using ProyectoSeminario.Entidades.Dtos;
+using ProyectoSeminario.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,12 @@ namespace ProyectoSeminario.Windows.Helpers
         {
             switch (obj)
             {
-                case Producto producto:
+                case ProductoListDto producto:
                     r.Cells[0].Value = producto.Nombre;
-                    r.Cells[1].Value = producto.Categoria;
-                    r.Cells[2].Value = producto.PrecioVenta;
+                    r.Cells[1].Value = producto.PrecioVenta;
 
                     break;
-                case Categoría categoria:
+                case Categoria categoria:
                     r.Cells[0].Value = categoria.NombreCategoria;
                     r.Cells[1].Value = categoria.Activa;
                     break;

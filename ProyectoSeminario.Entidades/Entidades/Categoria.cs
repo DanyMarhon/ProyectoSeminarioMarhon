@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoSeminario.Entidades.Entidades
 {
-    public class Categoría
+    public class Categoria
     {
         public int IdCategoria { get; set; }
         public required string NombreCategoria { get; set; }

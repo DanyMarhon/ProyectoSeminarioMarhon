@@ -12,7 +12,7 @@ namespace ProyectoSeminario.Windows.Formularios
 {
     public partial class frmMenuPrincipal : Form
     {
-        public frmMenuPrincipal()
+        public frmMenuPrincipal(IServiceProvider serviceProvider)
         {
             InitializeComponent();
         }
