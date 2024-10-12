@@ -8,7 +8,7 @@ namespace ProyectoSeminario.Entidades.Entidades
 {
     public class Categoria
     {
-        public int IdCategoria { get; set; }
+        public int CategoriaId { get; set; }
         public required string NombreCategoria { get; set; }
         public bool Activa { get; set; }
     }
