@@ -2,6 +2,8 @@
 using ProyectoSeminario.Datos.Repositorios;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
+using ProyectoSeminario.Servicios.Interfaces;
+using ProyectoSeminario.Servicios.Servicios;
 
 namespace ProyectoSeminario.IoC
 {
@@ -16,8 +18,7 @@ namespace ProyectoSeminario.IoC
 
             service.AddScoped<IRepositorioProductos, RepositorioProductos>();
 
-
-            //service.AddScoped<IServiciosProvinciasEstados, ServiciosProvinciasEstados>();
+            service.AddScoped<IServiciosProductos, ServiciosProductos>();
 
 
             //service.AddScoped<IServiciosPaises>(sp => {

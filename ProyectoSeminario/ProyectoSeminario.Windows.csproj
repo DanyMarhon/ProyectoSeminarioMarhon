@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProyectoSeminario.Entidades\ProyectoSeminario.Entidades.csproj" />
     <ProjectReference Include="..\ProyectoSeminario.IoC\ProyectoSeminario.IoC.csproj" />
   </ItemGroup>

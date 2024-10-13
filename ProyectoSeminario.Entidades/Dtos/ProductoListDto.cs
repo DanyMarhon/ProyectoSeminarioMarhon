@@ -11,5 +11,6 @@ namespace ProyectoSeminario.Entidades.Dtos
     {
         public string Nombre { get; set; } = null!;
         public decimal PrecioVenta { get; set; }
+        public string Categoria { get; set; }
     }
 }

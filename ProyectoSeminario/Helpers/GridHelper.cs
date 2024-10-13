@@ -38,6 +38,7 @@ namespace ProyectoSeminario.Windows.Helpers
                 case ProductoListDto producto:
                     r.Cells[0].Value = producto.Nombre;
                     r.Cells[1].Value = producto.PrecioVenta;
+                    r.Cells[2].Value = producto.Categoria;
 
                     break;
                 case Categoria categoria:
