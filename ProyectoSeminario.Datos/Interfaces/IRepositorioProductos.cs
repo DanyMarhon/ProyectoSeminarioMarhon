@@ -11,7 +11,7 @@ namespace ProyectoSeminario.Datos.Interfaces
 {
     public interface IRepositorioProductos
     {
-        List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null);
+        List<ProductoListDto> GetLista(SqlConnection conn, SqlTransaction? tran = null);
         int GetCantidad(SqlConnection conn, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null);
         void Borrar(Categoria categoria, int ProductoId, SqlConnection conn, SqlTransaction tran);
         bool Existe(Producto producto, SqlConnection conn);

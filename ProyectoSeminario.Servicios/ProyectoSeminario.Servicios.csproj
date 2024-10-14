@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProyectoSeminario.Datos\ProyectoSeminario.Datos.csproj" />
     <ProjectReference Include="..\ProyectoSeminario.Entidades\ProyectoSeminario.Entidades.csproj" />
   </ItemGroup>
 

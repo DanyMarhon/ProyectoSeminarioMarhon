@@ -1,4 +1,5 @@
-﻿using ProyectoSeminario.Entidades.Dtos;
+﻿using ProyectoSeminario.Datos.Interfaces;
+using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Entidades.Entidades;
 using ProyectoSeminario.Servicios.Interfaces;
 using System.Data.SqlClient;
@@ -6,8 +7,14 @@ using System.Data.SqlClient;
 namespace ProyectoSeminario.Servicios.Servicios
 {
     public class ServiciosProductos : IServiciosProductos
-
     {
+        private readonly IRepositorioProductos? _repositorio;
+        private readonly string? _cadena;
+        public ServiciosProductos(IRepositorioProductos? repositorio, string? cadena)
+        {
+            _repositorio = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!");
+            _cadena = cadena;
+        }
         public void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran)
         {
             throw new NotImplementedException();
@@ -28,14 +35,35 @@ namespace ProyectoSeminario.Servicios.Servicios
             throw new NotImplementedException();
         }
 
-        public int GetCantidad(SqlConnection conn, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public int GetCantidad(SqlConnection conn, SqlTransaction? tran = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int cantidad = 0;
+                using (conn = new SqlConnection())
+                {
+                    conn.Open();
+                    string selectQuery = "SELECT COUNT(*) FROM Productos";
+                    using (var comando = new SqlCommand(selectQuery, conn))
+                    {
+                        cantidad = (int)comando.ExecuteScalar();
+                    }
+                }
+                return cantidad;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public List<ProductoListDto> GetLista()
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection())
+            {
+                conn.Open();
+                return _repositorio!.GetLista(conn);
+            }
         }
 
         public List<Producto> GetListaProductos(SqlConnection conn)

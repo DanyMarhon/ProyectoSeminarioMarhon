@@ -144,6 +144,7 @@
             Controls.Add(topTS);
             Name = "frmProductos";
             Text = "frmProductos";
+            Load += frmProductos_Load;
             topTS.ResumeLayout(false);
             topTS.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();

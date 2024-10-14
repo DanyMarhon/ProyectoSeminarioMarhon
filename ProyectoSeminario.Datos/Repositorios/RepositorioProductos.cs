@@ -3,6 +3,7 @@ using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Entidades.Entidades;
 using Dapper;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace ProyectoSeminario.Datos.Repositorios
 {
@@ -30,18 +31,35 @@ namespace ProyectoSeminario.Datos.Repositorios
 
         public int GetCantidad(SqlConnection conn, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int cantidad = 0;
+                using (conn = new SqlConnection())
+                {
+                    conn.Open();
+                    string selectQuery = "SELECT COUNT(*) FROM Productos";
+                    using (var comando = new SqlCommand(selectQuery, conn))
+                    {
+                        cantidad = (int)comando.ExecuteScalar();
+                    }
+                }
+                return cantidad;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public List<ProductoListDto> GetLista(SqlConnection conn, SqlTransaction? tran = null)
         {
             var listaProductos = new List<Producto>();
 
             var selectQuery = @"SELECT * FROM Productos";
-            var listaProducto = conn.Query<Producto>(selectQuery).ToList();
-            listaProductos.AddRange(listaProducto);
+            var listaProducto = conn.Query<ProductoListDto>(selectQuery).ToList();
+            listaProductos.AddRange(listaProductos);
 
-            return listaProductos;
+            return listaProducto;
         }
 
         public List<Producto> GetListaProductos(SqlConnection conn)
