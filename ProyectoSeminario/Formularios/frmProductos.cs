@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProyectoSeminario.Entidades.Dtos;
-using ProyectoSeminario.Entidades.Entidades;
 using ProyectoSeminario.Servicios.Interfaces;
 using ProyectoSeminario.Windows.Helpers;
-using System.Data.SqlClient;
 
 namespace ProyectoSeminario.Windows.Formularios
 {
@@ -18,9 +16,14 @@ namespace ProyectoSeminario.Windows.Formularios
         private int pageSize = 10;//registros por página
         private int totalRecords = 0;//cantidad de registros
 
+        private Func<ProductoListDto, bool>? filter = null;
         public frmProductos(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
+            if (serviceProvider == null)
+            {
+                throw new ApplicationException("Dependencias no cargadas");
+            }
             _serviceProvider = serviceProvider;
             _servicio = serviceProvider?.GetService<IServiciosProductos>()
                 ?? throw new ApplicationException("Dependencias no cargadas!!!"); ;
@@ -35,14 +38,13 @@ namespace ProyectoSeminario.Windows.Formularios
         {
             try
             {
-                
-                    lista = _servicio!.GetLista();
-                    MostrarDatosEnGrilla(lista);
-                
+                totalRecords = _servicio!.GetCantidad(filter);
+                totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                LoadData(filter);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"Ocurrió un error al recargar la grilla: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 throw;
             }
         }
@@ -66,11 +68,30 @@ namespace ProyectoSeminario.Windows.Formularios
         {
             try
             {
-                using (var conn = new SqlConnection())
+                lista = _servicio!.GetLista(currentPage, pageSize, filter);
+                if (lista.Count > 0)
                 {
-                    conn.Open();
-                    lista = _servicio!.GetLista();
                     MostrarDatosEnGrilla(lista);
+                    if (cboPaginas.Items.Count != totalPages)
+                    {
+                        CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
+                    }
+                    txtCantidadPaginas.Text = totalPages.ToString();
+                    cboPaginas.SelectedIndexChanged -= cboPaginas_SelectedIndexChanged;
+                    cboPaginas.SelectedIndex = currentPage == 1 ? 0 : currentPage - 1;
+                    cboPaginas.SelectedIndexChanged += cboPaginas_SelectedIndexChanged;
+
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros!!!", "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No hay registros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    currentPage = 1;
+                    filter = null;
+                    tsbFiltrar.Enabled = true;
+                    tsbFiltrar.BackColor = SystemColors.Control;
+                    RecargarGrilla();
                 }
             }
             catch (Exception)
@@ -79,5 +100,84 @@ namespace ProyectoSeminario.Windows.Formularios
                 throw;
             }
         }
+
+        private void cboPaginas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentPage = int.Parse(cboPaginas.Text);
+            LoadData(filter);
+        }
+
+        //private void tsbNuevo_Click(object sender, EventArgs e)
+        //{
+
+        //    frmEmpleadosAE frm = new frmEmpleadosAE(_serviceProvider) { Text = "Agregar Empleado" };
+        //    DialogResult dr = frm.ShowDialog(this);
+        //    if (dr == DialogResult.Cancel) return;
+        //    Empleado? empleado = frm.GetEmpleado();
+        //    if (empleado is null) return;
+        //    try
+        //    {
+        //        if (_servicio is null)
+        //        {
+        //            throw new ApplicationException("Dependencias no cargadas");
+        //        }
+        //        _servicio.Guardar(empleado);
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+
+        //}
+
+
+        //private void tsbActualizar_Click(object sender, EventArgs e)
+        //{
+        //    filter = null;
+        //    currentPage = 1;
+        //    tsbFiltrar.Enabled = true;
+        //    tsbFiltrar.BackColor = SystemColors.Control;
+        //    RecargarGrilla();
+        //}
+
+
+        //private void tsbFiltrar_Click(object sender, EventArgs e)
+        //{
+        //    frmFiltroTexto frm = new frmFiltroTexto() { Text = "Ingresar texto para buscar por apellido" };
+        //    DialogResult dr = frm.ShowDialog(this);
+        //    try
+        //    {
+        //        var textoFiltro = frm.GetTexto();
+        //        if (textoFiltro is null || textoFiltro == string.Empty)
+        //        {
+        //            return;
+        //        }
+        //        filter = e => e.Apellido.ToUpper()
+        //            .Contains(textoFiltro.ToUpper());
+        //        totalRecords = _servicio!.GetCantidad(filter);
+        //        currentPage = 1;
+        //        if (totalRecords > 0)
+        //        {
+        //            totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+        //            tsbFiltrar.Enabled = false;
+        //            tsbFiltrar.BackColor = Color.Orange;
+
+        //            LoadData(filter);
+
+        //        }
+        //        else
+        //        {
+
+        //            MessageBox.Show("No se encontraron registros!!!", "Mensaje",
+        //                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            filter = null;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
     }
 }

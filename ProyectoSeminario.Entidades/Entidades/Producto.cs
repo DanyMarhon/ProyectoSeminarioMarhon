@@ -13,6 +13,7 @@ namespace ProyectoSeminario.Entidades.Entidades
         public string? Descripcion { get; set; }
         public decimal PrecioVenta { get; set; }
         public bool Activo { get; set; }
+        public int CategoriaId { get; set; }
         public required Categoria Categoria { get; set; }
     }
 }

@@ -1,70 +1,83 @@
-﻿using ProyectoSeminario.Datos.Interfaces;
+﻿using Dapper;
+using ProyectoSeminario.Datos.Interfaces;
 using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Entidades.Entidades;
-using Dapper;
 using System.Data.SqlClient;
-using System.Collections.Generic;
 
 namespace ProyectoSeminario.Datos.Repositorios
 {
     public class RepositorioProductos : IRepositorioProductos
     {
-        public void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran)
+        public void Agregar(Producto producto, SqlConnection conn, SqlTransaction? tran = null)
         {
             throw new NotImplementedException();
         }
 
-        public void Borrar(Categoria categoria, int ProductoId, SqlConnection conn, SqlTransaction tran)
+        public void Borrar(int ProductoId, SqlConnection conn, SqlTransaction? tran = null)
         {
             throw new NotImplementedException();
         }
 
-        public void Editar(Producto producto, SqlConnection conn, SqlTransaction tran)
+        public void Editar(Producto producto, SqlConnection conn, SqlTransaction? tran = null)
         {
             throw new NotImplementedException();
         }
 
-        public bool Existe(Producto producto, SqlConnection conn)
+        public bool Existe(Producto producto, SqlConnection conn, SqlTransaction? tran = null)
         {
             throw new NotImplementedException();
         }
 
-        public int GetCantidad(SqlConnection conn, Categoria categoria, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public int GetCantidad(SqlConnection conn, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
-            try
-            {
-                int cantidad = 0;
-                using (conn = new SqlConnection())
-                {
-                    conn.Open();
-                    string selectQuery = "SELECT COUNT(*) FROM Productos";
-                    using (var comando = new SqlCommand(selectQuery, conn))
-                    {
-                        cantidad = (int)comando.ExecuteScalar();
-                    }
-                }
-                return cantidad;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public List<ProductoListDto> GetLista(SqlConnection conn, SqlTransaction? tran = null)
-        {
-            var listaProductos = new List<Producto>();
-
             var selectQuery = @"SELECT * FROM Productos";
-            var listaProducto = conn.Query<ProductoListDto>(selectQuery).ToList();
-            listaProductos.AddRange(listaProductos);
-
-            return listaProducto;
+            var query = conn.Query<ProductoListDto>(selectQuery).ToList();
+            if (filter != null)
+            {
+                query = query.Where(filter).ToList();
+            }
+            return query.Count;
         }
 
-        public List<Producto> GetListaProductos(SqlConnection conn)
+        public Producto? GetProductoPorId(int productoId, SqlConnection conn)
         {
-            throw new NotImplementedException();
+            string selectQuery = @"SELECT ProductoId, Nombre, Descripcion, PrecioVenta, Activo, CategoriaId
+                FROM Productos
+                WHERE ProductoId=@ProductoId";
+            var producto = conn.QuerySingleOrDefault<Producto>(selectQuery, new { @ProductoId = productoId });
+
+            if (producto == null)
+            {
+                return null;
+            }
+            return producto;
+        }
+
+        public List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
+        {
+            var selectQuery =
+                 @"SELECT p.ProductoId, p.Nombre, p.Descripcion, p.PrecioVenta, p.Activo, p.CategoriaId, c.NombreCategoria
+          FROM Productos p
+          LEFT JOIN Categorias c ON p.CategoriaId = c.CategoriaId";
+
+            var lista = conn.Query<ProductoListDto, CategoriaListDto, ProductoListDto>(
+                selectQuery,
+                (producto, categoria) =>
+                {
+                    // Concatenacion de los campos relacionados con la dirección
+                    producto.NombreCategoria = $"{categoria.NombreCategoria}";
+                    return producto;
+                },
+                splitOn: "CategoriaId",  // Punto de split
+                transaction: tran
+            ).ToList();
+
+            if (filter != null)
+            {
+                lista = lista.Where(filter).ToList();
+            }
+
+            return lista.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

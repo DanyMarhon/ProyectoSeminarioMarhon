@@ -17,8 +17,15 @@ namespace ProyectoSeminario.IoC
                 .ConnectionStrings["MiConexion"].ToString();
 
             service.AddScoped<IRepositorioProductos, RepositorioProductos>();
+            service.AddScoped<IRepositorioCategorias, RepositorioCategorias>();
 
-            service.AddScoped<IServiciosProductos, ServiciosProductos>();
+
+            service.AddScoped<IServiciosProductos>(sp =>
+            {
+                var repositorio = new RepositorioProductos();
+                var repositorioCategorias = new RepositorioCategorias();
+                return new ServiciosProductos(repositorio, cadena);
+            });
 
 
             //service.AddScoped<IServiciosPaises>(sp => {

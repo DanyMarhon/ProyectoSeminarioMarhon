@@ -38,12 +38,11 @@ namespace ProyectoSeminario.Windows.Helpers
                 case ProductoListDto producto:
                     r.Cells[0].Value = producto.Nombre;
                     r.Cells[1].Value = producto.PrecioVenta;
-                    r.Cells[2].Value = producto.Categoria;
-
+                    r.Cells[2].Value = producto.NombreCategoria;
+                    r.Cells[3].Value = producto.Activo.ToString();
                     break;
-                case Categoria categoria:
+                case CategoriaListDto categoria:
                     r.Cells[0].Value = categoria.NombreCategoria;
-                    r.Cells[1].Value = categoria.Activa;
                     break;
             }
             r.Tag = obj;

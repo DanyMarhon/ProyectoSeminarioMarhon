@@ -11,12 +11,12 @@ namespace ProyectoSeminario.Servicios.Interfaces
 {
     public interface IServiciosProductos
     {
-        List<ProductoListDto> GetLista();
-        int GetCantidad(SqlConnection conn, SqlTransaction? tran = null);
-        void Borrar(Categoria categoria, int ProductoId, SqlConnection conn, SqlTransaction tran);
-        bool Existe(Producto producto, SqlConnection conn);
-        void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran);
-        void Editar(Producto producto, SqlConnection conn, SqlTransaction tran);
-        List<Producto> GetListaProductos(SqlConnection conn);
+        void Borrar(int productoId);
+        //bool EstaRelacionado(int productoId);
+        bool Existe(Producto producto);
+        List<ProductoListDto> GetLista(int currentPage, int pageSize, Func<ProductoListDto, bool>? filter = null);
+        void Guardar(Producto producto);
+        Producto? GetProductoPorId(int productoId);
+        int GetCantidad(Func<ProductoListDto, bool>? filter = null);
     }
 }

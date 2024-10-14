@@ -8,65 +8,53 @@ namespace ProyectoSeminario.Servicios.Servicios
 {
     public class ServiciosProductos : IServiciosProductos
     {
-        private readonly IRepositorioProductos? _repositorio;
+        private readonly IRepositorioProductos? _repositorioProductos;
         private readonly string? _cadena;
         public ServiciosProductos(IRepositorioProductos? repositorio, string? cadena)
         {
-            _repositorio = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!");
+            _repositorioProductos = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!");
             _cadena = cadena;
         }
-        public void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran)
+
+        public void Borrar(int productoId)
         {
             throw new NotImplementedException();
         }
 
-        public void Borrar(Categoria categoria, int ProductoId, SqlConnection conn, SqlTransaction tran)
+        public bool Existe(Producto producto)
         {
             throw new NotImplementedException();
         }
 
-        public void Editar(Producto producto, SqlConnection conn, SqlTransaction tran)
+        public int GetCantidad(Func<ProductoListDto, bool>? filter = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Existe(Producto producto, SqlConnection conn)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetCantidad(SqlConnection conn, SqlTransaction? tran = null)
-        {
-            try
-            {
-                int cantidad = 0;
-                using (conn = new SqlConnection())
-                {
-                    conn.Open();
-                    string selectQuery = "SELECT COUNT(*) FROM Productos";
-                    using (var comando = new SqlCommand(selectQuery, conn))
-                    {
-                        cantidad = (int)comando.ExecuteScalar();
-                    }
-                }
-                return cantidad;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public List<ProductoListDto> GetLista()
-        {
-            using (var conn = new SqlConnection())
+            using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.GetLista(conn);
+                return _repositorioProductos!.GetCantidad(conn, filter);
             }
         }
 
-        public List<Producto> GetListaProductos(SqlConnection conn)
+        public List<ProductoListDto> GetLista(int currentPage, int pageSize, Func<ProductoListDto, bool>? filter = null)
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorioProductos.GetLista(conn, currentPage, pageSize, filter);
+            }
+        }
+
+        public Producto? GetProductoPorId(int productoId)
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                var empleado = _repositorioProductos.GetProductoPorId(productoId, conn);
+                return empleado;
+            }
+        }
+
+        public void Guardar(Producto producto)
         {
             throw new NotImplementedException();
         }

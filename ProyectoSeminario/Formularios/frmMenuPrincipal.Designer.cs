@@ -105,7 +105,7 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            panel1.BackColor = Color.FromArgb(14, 30, 54);
+            panel1.BackColor = Color.DarkSlateGray;
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(btnCombos);
             panel1.Controls.Add(btnCategorias);
@@ -128,6 +128,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 30.75F, FontStyle.Bold);
+            label1.ForeColor = SystemColors.InfoText;
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
             label1.Size = new Size(117, 55);
@@ -152,7 +153,7 @@
             // btnMinimizar
             // 
             btnMinimizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMinimizar.BackColor = Color.FromArgb(14, 30, 54);
+            btnMinimizar.BackColor = Color.DarkSlateGray;
             btnMinimizar.Image = Properties.Resources.minimizar;
             btnMinimizar.Location = new Point(706, 1);
             btnMinimizar.Name = "btnMinimizar";
@@ -165,7 +166,7 @@
             // btnRestaurar
             // 
             btnRestaurar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRestaurar.BackColor = Color.FromArgb(14, 30, 54);
+            btnRestaurar.BackColor = Color.DarkSlateGray;
             btnRestaurar.Image = Properties.Resources.restaurar;
             btnRestaurar.Location = new Point(737, 1);
             btnRestaurar.Name = "btnRestaurar";
@@ -179,7 +180,7 @@
             // btnCerrar
             // 
             btnCerrar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCerrar.BackColor = Color.FromArgb(14, 30, 54);
+            btnCerrar.BackColor = Color.DarkSlateGray;
             btnCerrar.Image = Properties.Resources.Close;
             btnCerrar.Location = new Point(768, 1);
             btnCerrar.Name = "btnCerrar";
@@ -204,6 +205,7 @@
             // 
             // panelContenedorPrincipal
             // 
+            panelContenedorPrincipal.BackColor = Color.DarkSeaGreen;
             panelContenedorPrincipal.Dock = DockStyle.Fill;
             panelContenedorPrincipal.Enabled = false;
             panelContenedorPrincipal.Location = new Point(0, 0);
@@ -216,6 +218,7 @@
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 90.75F, FontStyle.Bold);
+            label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(283, 147);
             label2.Name = "label2";
             label2.Size = new Size(344, 161);
@@ -226,7 +229,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(46, 51, 73);
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(800, 450);
             Controls.Add(label2);
             Controls.Add(barraTitulo);
