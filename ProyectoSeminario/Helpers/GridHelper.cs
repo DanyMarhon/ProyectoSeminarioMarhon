@@ -38,7 +38,7 @@ namespace ProyectoSeminario.Windows.Helpers
                 case ProductoListDto producto:
                     r.Cells[0].Value = producto.Nombre;
                     r.Cells[1].Value = producto.NombreCategoria;
-                    r.Cells[2].Value = producto.PrecioVenta;
+                    r.Cells[2].Value = producto.PrecioVenta.ToString();
                     r.Cells[3].Value = producto.Activo.ToString();
                     break;
                 case CategoriaListDto categoria:
@@ -47,7 +47,6 @@ namespace ProyectoSeminario.Windows.Helpers
                     break;
             }
             r.Tag = obj;
-
         }
         public static void AgregarFila(DataGridView dgv, DataGridViewRow r)
         {

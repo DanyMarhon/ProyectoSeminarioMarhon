@@ -70,7 +70,7 @@ namespace ProyectoSeminario.Windows.Formularios
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            frmCategorias frm = new frmCategorias();
+            frmCategorias frm = new frmCategorias(_serviceProvider);
             frm.ShowDialog();
         }
 

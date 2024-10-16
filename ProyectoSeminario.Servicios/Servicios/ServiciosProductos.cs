@@ -49,8 +49,8 @@ namespace ProyectoSeminario.Servicios.Servicios
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                var empleado = _repositorioProductos.GetProductoPorId(productoId, conn);
-                return empleado;
+                var producto = _repositorioProductos.GetProductoPorId(productoId, conn);
+                return producto;
             }
         }
 

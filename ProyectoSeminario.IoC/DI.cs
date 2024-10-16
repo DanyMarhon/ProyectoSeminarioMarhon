@@ -27,11 +27,12 @@ namespace ProyectoSeminario.IoC
                 return new ServiciosProductos(repositorio, cadena);
             });
 
-
-            //service.AddScoped<IServiciosPaises>(sp => {
-            //    var repositorio = new RepositorioPaises();
-            //    return new ServiciosPaises(repositorio, cadena);
-            //});
+            service.AddScoped<IServiciosCategorias>(sp =>
+            {
+                var repositorio = new RepositorioCategorias();
+                var repositorioCategorias = new RepositorioCategorias();
+                return new ServiciosCategorias(repositorio, cadena);
+            });
 
             return service.BuildServiceProvider();
         }
