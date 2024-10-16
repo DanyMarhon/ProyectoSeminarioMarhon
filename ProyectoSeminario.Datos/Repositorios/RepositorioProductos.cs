@@ -58,7 +58,7 @@ namespace ProyectoSeminario.Datos.Repositorios
         public List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
             var selectQuery =
-                 @"SELECT p.ProductoId, p.Nombre, p.Descripcion, p.CategoriaId, p.PrecioVenta, p.Activo, c.NombreCategoria
+                 @"SELECT p.ProductoId, p.Nombre, p.Descripcion, p.PrecioVenta, p.Activo, p.CategoriaId, c.NombreCategoria
           FROM Productos p
           LEFT JOIN Categorias c ON p.CategoriaId = c.CategoriaId";
 
