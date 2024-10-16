@@ -107,6 +107,36 @@ namespace ProyectoSeminario.Windows.Formularios
             LoadData(filter);
         }
 
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                LoadData(filter);
+            }
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                LoadData(filter);
+            }
+        }
+
+        private void btnPrimero_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            LoadData(filter);
+        }
+
+        private void btnUltimo_Click(object sender, EventArgs e)
+        {
+            currentPage = totalPages;
+            LoadData(filter);
+        }
+
         //private void tsbNuevo_Click(object sender, EventArgs e)
         //{
 

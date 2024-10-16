@@ -122,6 +122,7 @@
             btnUltimo.TabIndex = 4;
             btnUltimo.Text = "Ultimo";
             btnUltimo.UseVisualStyleBackColor = true;
+            btnUltimo.Click += btnUltimo_Click;
             // 
             // btnSiguiente
             // 
@@ -131,6 +132,7 @@
             btnSiguiente.TabIndex = 4;
             btnSiguiente.Text = "Siguiente";
             btnSiguiente.UseVisualStyleBackColor = true;
+            btnSiguiente.Click += btnSiguiente_Click;
             // 
             // btnAnterior
             // 
@@ -140,6 +142,7 @@
             btnAnterior.TabIndex = 4;
             btnAnterior.Text = "anterior";
             btnAnterior.UseVisualStyleBackColor = true;
+            btnAnterior.Click += btnAnterior_Click;
             // 
             // btnPrimero
             // 
@@ -149,6 +152,7 @@
             btnPrimero.TabIndex = 4;
             btnPrimero.Text = "primero";
             btnPrimero.UseVisualStyleBackColor = true;
+            btnPrimero.Click += btnPrimero_Click;
             // 
             // txtCantidadPaginas
             // 

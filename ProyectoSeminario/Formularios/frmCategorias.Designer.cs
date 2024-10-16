@@ -33,10 +33,8 @@
             tsbAgregar = new ToolStripButton();
             tsbBorrar = new ToolStripButton();
             tsbEditar = new ToolStripButton();
+            tsbFiltrar = new ToolStripButton();
             panelNavegacion = new Panel();
-            dgvDatos = new DataGridView();
-            colCategorias = new DataGridViewTextBoxColumn();
-            colActiva = new DataGridViewTextBoxColumn();
             btnUltimo = new Button();
             btnSiguiente = new Button();
             btnAnterior = new Button();
@@ -45,7 +43,9 @@
             label2 = new Label();
             label1 = new Label();
             cboPaginas = new ComboBox();
-            tsbFiltrar = new ToolStripButton();
+            dgvDatos = new DataGridView();
+            colCategorias = new DataGridViewTextBoxColumn();
+            colActiva = new DataGridViewTextBoxColumn();
             topTS.SuspendLayout();
             panelNavegacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -87,6 +87,15 @@
             tsbEditar.Size = new Size(23, 22);
             tsbEditar.Text = "toolStripButton1";
             // 
+            // tsbFiltrar
+            // 
+            tsbFiltrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbFiltrar.Image = (Image)resources.GetObject("tsbFiltrar.Image");
+            tsbFiltrar.ImageTransparentColor = Color.Magenta;
+            tsbFiltrar.Name = "tsbFiltrar";
+            tsbFiltrar.Size = new Size(23, 22);
+            tsbFiltrar.Text = "toolStripButton1";
+            // 
             // panelNavegacion
             // 
             panelNavegacion.Controls.Add(btnUltimo);
@@ -103,37 +112,6 @@
             panelNavegacion.Size = new Size(800, 83);
             panelNavegacion.TabIndex = 1;
             // 
-            // dgvDatos
-            // 
-            dgvDatos.AllowUserToAddRows = false;
-            dgvDatos.AllowUserToDeleteRows = false;
-            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colCategorias, colActiva });
-            dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 25);
-            dgvDatos.MultiSelect = false;
-            dgvDatos.Name = "dgvDatos";
-            dgvDatos.ReadOnly = true;
-            dgvDatos.RowHeadersVisible = false;
-            dgvDatos.Size = new Size(800, 342);
-            dgvDatos.TabIndex = 2;
-            // 
-            // colCategorias
-            // 
-            colCategorias.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colCategorias.FillWeight = 159.390884F;
-            colCategorias.HeaderText = "Categorías";
-            colCategorias.Name = "colCategorias";
-            colCategorias.ReadOnly = true;
-            // 
-            // colActiva
-            // 
-            colActiva.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colActiva.FillWeight = 40.6091423F;
-            colActiva.HeaderText = "Activa";
-            colActiva.Name = "colActiva";
-            colActiva.ReadOnly = true;
-            // 
             // btnUltimo
             // 
             btnUltimo.Location = new Point(630, 20);
@@ -142,6 +120,7 @@
             btnUltimo.TabIndex = 9;
             btnUltimo.Text = "Ultimo";
             btnUltimo.UseVisualStyleBackColor = true;
+            btnUltimo.Click += btnUltimo_Click;
             // 
             // btnSiguiente
             // 
@@ -151,6 +130,7 @@
             btnSiguiente.TabIndex = 10;
             btnSiguiente.Text = "Siguiente";
             btnSiguiente.UseVisualStyleBackColor = true;
+            btnSiguiente.Click += btnSiguiente_Click;
             // 
             // btnAnterior
             // 
@@ -160,6 +140,7 @@
             btnAnterior.TabIndex = 11;
             btnAnterior.Text = "anterior";
             btnAnterior.UseVisualStyleBackColor = true;
+            btnAnterior.Click += btnAnterior_Click;
             // 
             // btnPrimero
             // 
@@ -169,6 +150,7 @@
             btnPrimero.TabIndex = 12;
             btnPrimero.Text = "primero";
             btnPrimero.UseVisualStyleBackColor = true;
+            btnPrimero.Click += btnPrimero_Click;
             // 
             // txtCantidadPaginas
             // 
@@ -203,14 +185,36 @@
             cboPaginas.Size = new Size(72, 23);
             cboPaginas.TabIndex = 5;
             // 
-            // tsbFiltrar
+            // dgvDatos
             // 
-            tsbFiltrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbFiltrar.Image = (Image)resources.GetObject("tsbFiltrar.Image");
-            tsbFiltrar.ImageTransparentColor = Color.Magenta;
-            tsbFiltrar.Name = "tsbFiltrar";
-            tsbFiltrar.Size = new Size(23, 22);
-            tsbFiltrar.Text = "toolStripButton1";
+            dgvDatos.AllowUserToAddRows = false;
+            dgvDatos.AllowUserToDeleteRows = false;
+            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colCategorias, colActiva });
+            dgvDatos.Dock = DockStyle.Fill;
+            dgvDatos.Location = new Point(0, 25);
+            dgvDatos.MultiSelect = false;
+            dgvDatos.Name = "dgvDatos";
+            dgvDatos.ReadOnly = true;
+            dgvDatos.RowHeadersVisible = false;
+            dgvDatos.Size = new Size(800, 342);
+            dgvDatos.TabIndex = 2;
+            // 
+            // colCategorias
+            // 
+            colCategorias.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colCategorias.FillWeight = 159.390884F;
+            colCategorias.HeaderText = "Categorías";
+            colCategorias.Name = "colCategorias";
+            colCategorias.ReadOnly = true;
+            // 
+            // colActiva
+            // 
+            colActiva.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colActiva.FillWeight = 40.6091423F;
+            colActiva.HeaderText = "Activa";
+            colActiva.Name = "colActiva";
+            colActiva.ReadOnly = true;
             // 
             // frmCategorias
             // 

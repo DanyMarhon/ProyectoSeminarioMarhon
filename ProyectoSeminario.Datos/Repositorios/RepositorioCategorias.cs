@@ -2,12 +2,7 @@
 using ProyectoSeminario.Datos.Interfaces;
 using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Entidades.Entidades;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProyectoSeminario.Datos.Repositorios
 {
