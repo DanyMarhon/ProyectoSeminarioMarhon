@@ -30,7 +30,9 @@ namespace ProyectoSeminario.Datos.Repositorios
 
         public int GetCantidad(SqlConnection conn, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
-            var selectQuery = @"SELECT * FROM Productos";
+            var selectQuery = @"SELECT p.ProductoId, p.Nombre, p.PrecioVenta, c.NombreCategoria, p.Activo
+                          FROM Productos p
+                          LEFT JOIN Categorias c ON p.CategoriaId = c.CategoriaId";
             var query = conn.Query<ProductoListDto>(selectQuery).ToList();
             if (filter != null)
             {
