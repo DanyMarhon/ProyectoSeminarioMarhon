@@ -137,5 +137,11 @@ namespace ProyectoSeminario.Windows.Formularios
             currentPage = totalPages;
             LoadData(filter);
         }
+
+        private void tsbAgregar_Click(object sender, EventArgs e)
+        {
+            frmCategoriasAE frm = new frmCategoriasAE();
+            frm.ShowDialog();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Servicios.Interfaces;
 using ProyectoSeminario.Windows.Helpers;
+using System.Windows.Forms;
 
 namespace ProyectoSeminario.Windows.Formularios
 {
@@ -135,6 +136,12 @@ namespace ProyectoSeminario.Windows.Formularios
         {
             currentPage = totalPages;
             LoadData(filter);
+        }
+
+        private void tsbAgregar_Click(object sender, EventArgs e)
+        {
+            frmProductosAE frm = new frmProductosAE();
+            frm.ShowDialog();
         }
 
         //private void tsbNuevo_Click(object sender, EventArgs e)

@@ -31,9 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductos));
             topTS = new ToolStrip();
             tsbAgregar = new ToolStripButton();
-            tsbBorrar = new ToolStripButton();
             tsbEditar = new ToolStripButton();
             tsbFiltrar = new ToolStripButton();
+            tsbBorrar = new ToolStripButton();
+            tsbActivar = new ToolStripButton();
             panelNavegacion = new Panel();
             btnUltimo = new Button();
             btnSiguiente = new Button();
@@ -55,51 +56,64 @@
             // 
             // topTS
             // 
-            topTS.Items.AddRange(new ToolStripItem[] { tsbAgregar, tsbBorrar, tsbEditar, tsbFiltrar });
+            topTS.BackColor = SystemColors.ControlLight;
+            topTS.ImageScalingSize = new Size(32, 32);
+            topTS.Items.AddRange(new ToolStripItem[] { tsbAgregar, tsbEditar, tsbFiltrar, tsbBorrar, tsbActivar });
             topTS.Location = new Point(0, 0);
             topTS.Name = "topTS";
-            topTS.Size = new Size(800, 25);
+            topTS.Size = new Size(800, 39);
             topTS.TabIndex = 1;
             topTS.Text = "toolStrip1";
             // 
             // tsbAgregar
             // 
             tsbAgregar.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbAgregar.Image = (Image)resources.GetObject("tsbAgregar.Image");
+            tsbAgregar.Image = Properties.Resources.icons8_plus___96px;
             tsbAgregar.ImageTransparentColor = Color.Magenta;
             tsbAgregar.Name = "tsbAgregar";
-            tsbAgregar.Size = new Size(23, 22);
-            tsbAgregar.Text = "toolStripButton1";
-            // 
-            // tsbBorrar
-            // 
-            tsbBorrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbBorrar.Image = (Image)resources.GetObject("tsbBorrar.Image");
-            tsbBorrar.ImageTransparentColor = Color.Magenta;
-            tsbBorrar.Name = "tsbBorrar";
-            tsbBorrar.Size = new Size(23, 22);
-            tsbBorrar.Text = "toolStripButton1";
+            tsbAgregar.Size = new Size(36, 36);
+            tsbAgregar.Text = "Agregar";
+            tsbAgregar.Click += tsbAgregar_Click;
             // 
             // tsbEditar
             // 
             tsbEditar.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbEditar.Image = (Image)resources.GetObject("tsbEditar.Image");
+            tsbEditar.Image = Properties.Resources.icons8_pencil_96px;
             tsbEditar.ImageTransparentColor = Color.Magenta;
             tsbEditar.Name = "tsbEditar";
-            tsbEditar.Size = new Size(23, 22);
-            tsbEditar.Text = "toolStripButton1";
+            tsbEditar.Size = new Size(36, 36);
+            tsbEditar.Text = "Editar";
             // 
             // tsbFiltrar
             // 
             tsbFiltrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbFiltrar.Image = (Image)resources.GetObject("tsbFiltrar.Image");
+            tsbFiltrar.Image = Properties.Resources.icons8_menu_96px;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
             tsbFiltrar.Name = "tsbFiltrar";
-            tsbFiltrar.Size = new Size(23, 22);
-            tsbFiltrar.Text = "toolStripButton1";
+            tsbFiltrar.Size = new Size(36, 36);
+            tsbFiltrar.Text = "Filtrar";
+            // 
+            // tsbBorrar
+            // 
+            tsbBorrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbBorrar.Image = Properties.Resources.icons8_cancel_96px;
+            tsbBorrar.ImageTransparentColor = Color.Magenta;
+            tsbBorrar.Name = "tsbBorrar";
+            tsbBorrar.Size = new Size(36, 36);
+            tsbBorrar.Text = "Desactivar";
+            // 
+            // tsbActivar
+            // 
+            tsbActivar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbActivar.Image = Properties.Resources.icons8_checked_96px;
+            tsbActivar.ImageTransparentColor = Color.Magenta;
+            tsbActivar.Name = "tsbActivar";
+            tsbActivar.Size = new Size(36, 36);
+            tsbActivar.Text = "Activar";
             // 
             // panelNavegacion
             // 
+            panelNavegacion.BackColor = SystemColors.ControlLight;
             panelNavegacion.Controls.Add(btnUltimo);
             panelNavegacion.Controls.Add(btnSiguiente);
             panelNavegacion.Controls.Add(btnAnterior);
@@ -116,41 +130,41 @@
             // 
             // btnUltimo
             // 
-            btnUltimo.Location = new Point(626, 21);
+            btnUltimo.Image = (Image)resources.GetObject("btnUltimo.Image");
+            btnUltimo.Location = new Point(640, 18);
             btnUltimo.Name = "btnUltimo";
-            btnUltimo.Size = new Size(59, 37);
+            btnUltimo.Size = new Size(65, 45);
             btnUltimo.TabIndex = 4;
-            btnUltimo.Text = "Ultimo";
             btnUltimo.UseVisualStyleBackColor = true;
             btnUltimo.Click += btnUltimo_Click;
             // 
             // btnSiguiente
             // 
-            btnSiguiente.Location = new Point(549, 22);
+            btnSiguiente.Image = Properties.Resources.icons8_fast_forward_48px;
+            btnSiguiente.Location = new Point(560, 18);
             btnSiguiente.Name = "btnSiguiente";
-            btnSiguiente.Size = new Size(59, 37);
+            btnSiguiente.Size = new Size(65, 45);
             btnSiguiente.TabIndex = 4;
-            btnSiguiente.Text = "Siguiente";
             btnSiguiente.UseVisualStyleBackColor = true;
             btnSiguiente.Click += btnSiguiente_Click;
             // 
             // btnAnterior
             // 
-            btnAnterior.Location = new Point(473, 22);
+            btnAnterior.Image = Properties.Resources.icons8_rewind_48px;
+            btnAnterior.Location = new Point(479, 18);
             btnAnterior.Name = "btnAnterior";
-            btnAnterior.Size = new Size(59, 37);
+            btnAnterior.Size = new Size(65, 45);
             btnAnterior.TabIndex = 4;
-            btnAnterior.Text = "anterior";
             btnAnterior.UseVisualStyleBackColor = true;
             btnAnterior.Click += btnAnterior_Click;
             // 
             // btnPrimero
             // 
-            btnPrimero.Location = new Point(397, 22);
+            btnPrimero.Image = (Image)resources.GetObject("btnPrimero.Image");
+            btnPrimero.Location = new Point(396, 18);
             btnPrimero.Name = "btnPrimero";
-            btnPrimero.Size = new Size(59, 37);
+            btnPrimero.Size = new Size(65, 45);
             btnPrimero.TabIndex = 4;
-            btnPrimero.Text = "primero";
             btnPrimero.UseVisualStyleBackColor = true;
             btnPrimero.Click += btnPrimero_Click;
             // 
@@ -191,15 +205,15 @@
             // 
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
+            dgvDatos.Anchor = AnchorStyles.Left;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colProductos, colCategoria, colPrecio, colActiva });
-            dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 25);
+            dgvDatos.Location = new Point(0, 42);
             dgvDatos.MultiSelect = false;
             dgvDatos.Name = "dgvDatos";
             dgvDatos.ReadOnly = true;
             dgvDatos.RowHeadersVisible = false;
-            dgvDatos.Size = new Size(800, 342);
+            dgvDatos.Size = new Size(800, 325);
             dgvDatos.TabIndex = 3;
             // 
             // colProductos
@@ -275,5 +289,6 @@
         private Label label1;
         private ComboBox cboPaginas;
         private ToolStripButton tsbFiltrar;
+        private ToolStripButton tsbActivar;
     }
 }

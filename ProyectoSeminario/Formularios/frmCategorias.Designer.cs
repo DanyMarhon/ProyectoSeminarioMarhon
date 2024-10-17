@@ -68,6 +68,7 @@
             tsbAgregar.Name = "tsbAgregar";
             tsbAgregar.Size = new Size(23, 22);
             tsbAgregar.Text = "toolStripButton1";
+            tsbAgregar.Click += tsbAgregar_Click;
             // 
             // tsbBorrar
             // 
