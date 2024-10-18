@@ -1,4 +1,5 @@
-﻿using ProyectoSeminario.Entidades.Dtos;
+﻿using Dapper;
+using ProyectoSeminario.Entidades.Dtos;
 using ProyectoSeminario.Entidades.Entidades;
 using System.Data.SqlClient;
 
@@ -6,7 +7,7 @@ namespace ProyectoSeminario.Datos.Interfaces
 {
     public interface IRepositorioCategorias
     {
-        void Borrar(int CategoriaId, SqlConnection conn, SqlTransaction? tran = null);
+        void Desactivar(Categoria categoria, int CategoriaId, SqlConnection conn, SqlTransaction? tran = null);
 
         void Agregar(Categoria categoria, SqlConnection conn, SqlTransaction? tran = null);
 
@@ -22,5 +23,7 @@ namespace ProyectoSeminario.Datos.Interfaces
             SqlTransaction? tran = null);
         List<Categoria> GetProductosPorCategoriaId(int categoriaId,
             SqlConnection conn, SqlTransaction? tran = null);
+
+        bool EstaRelacionada(int categoriaId, SqlConnection conn, SqlTransaction? tran = null);
     }
 }

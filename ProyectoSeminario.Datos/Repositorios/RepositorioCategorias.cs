@@ -10,12 +10,44 @@ namespace ProyectoSeminario.Datos.Repositorios
     {
         public void Agregar(Categoria categoria, SqlConnection conn, SqlTransaction? tran = null)
         {
-            throw new NotImplementedException();
+            var insertQuery = @"INSERT INTO Categorias (NombreCategoria, Activa) VALUES 
+                        (@NombreCategoria, @Activa); 
+                        SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            int primaryKey = conn.QuerySingle<int>(insertQuery, new
+            {
+                NombreCategoria = categoria.NombreCategoria,
+                Activa = categoria.Activa
+            }, tran);
+
+            if (primaryKey > 0)
+            {
+                categoria.CategoriaId = primaryKey;
+                return;
+            }
+            throw new Exception("No se pudo agregar");
+
         }
 
-        public void Borrar(int CategoriaId, SqlConnection conn, SqlTransaction? tran = null)
+        public void Desactivar(Categoria categoria, int categoriaId, SqlConnection conn, SqlTransaction? tran = null)
         {
-            throw new NotImplementedException();
+            if (EstaRelacionada(categoriaId, conn, tran))
+            {
+                var updateQuery = @"UPDATE Categorias SET 
+                        Activa = 0
+                        WHERE categoriaId = @categoriaId";
+
+                int registrosAfectados = conn.Execute(updateQuery, new
+                {
+                    categoria.Activa
+                }, tran);
+
+                if (registrosAfectados == 0)
+                {
+                    throw new Exception("No se pudo desactivar");
+                }
+            }
+            else { throw new Exception("No se pudo desactivar, la categoría contiene productos"); }
         }
 
         public void Editar(Categoria categoria, SqlConnection conn, SqlTransaction? tran = null)
@@ -25,7 +57,13 @@ namespace ProyectoSeminario.Datos.Repositorios
 
         public bool Existe(Categoria categoria, SqlConnection conn, SqlTransaction? tran = null)
         {
-            throw new NotImplementedException();
+            var selectQuery = "SELECT COUNT(*) FROM Categorias WHERE NombreCategoria = @NombreCategoria";
+            if (categoria.CategoriaId != 0)
+            {
+                selectQuery += " AND CategoriaId<>@CategoriaId";
+            }
+
+            return conn.QuerySingle<int>(selectQuery, categoria) > 0;
         }
 
         public int GetCantidad(SqlConnection conn, Func<CategoriaListDto, bool>? filter = null, SqlTransaction? tran = null)
@@ -72,14 +110,22 @@ namespace ProyectoSeminario.Datos.Repositorios
             return lista.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public List<Categoria> GetProductosPorCategoriaId(int productoId, SqlConnection conn, SqlTransaction? tran = null)
+        public List<Categoria> GetProductosPorCategoriaId(int categoriaId, SqlConnection conn, SqlTransaction? tran = null)
         {
             var query = @"
             SELECT * 
             FROM Categorias c
             JOIN Productos p ON c.CategoriaId = p.CategoriaId
             WHERE p.CategoriaId = @CategoriaId";
-            return conn.Query<Categoria>(query, new { ProductoId = productoId }, tran).ToList();
+            return conn.Query<Categoria>(query, new { CategoriaId = categoriaId }, tran).ToList();
+        }
+
+        public bool EstaRelacionada(int categoriaId, SqlConnection conn, SqlTransaction? tran = null)
+        {
+            var selectQuery = @"SELECT COUNT(*) FROM Productos 
+                WHERE CategoriaId=@CategoriaId";
+            return conn.QuerySingle<int>
+                (selectQuery, new { @CategoriaId = categoriaId }) > 0;
         }
     }
 }

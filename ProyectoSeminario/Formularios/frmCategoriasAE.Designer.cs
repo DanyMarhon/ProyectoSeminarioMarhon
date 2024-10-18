@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             txtNombreCategoria = new TextBox();
             btnCancelar = new Button();
             btnAceptar = new Button();
             label1 = new Label();
+            errorProvider1 = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // txtNombreCategoria
@@ -70,6 +73,10 @@
             label1.TabIndex = 6;
             label1.Text = "Nombre";
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // frmCategoriasAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -84,6 +91,7 @@
             Name = "frmCategoriasAE";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmCategoriasAE";
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -94,5 +102,6 @@
         private Button btnCancelar;
         private Button btnAceptar;
         private Label label1;
+        private ErrorProvider errorProvider1;
     }
 }

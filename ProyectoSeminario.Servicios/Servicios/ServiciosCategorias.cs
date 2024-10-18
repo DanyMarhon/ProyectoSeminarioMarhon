@@ -23,7 +23,11 @@ namespace ProyectoSeminario.Servicios.Servicios
 
         public bool Existe(Categoria categoria)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorioCategorias!.Existe(categoria, conn);
+            }
         }
 
         public int GetCantidad(Func<CategoriaListDto, bool>? filter = null)
@@ -56,7 +60,27 @@ namespace ProyectoSeminario.Servicios.Servicios
 
         public void Guardar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        if (categoria.CategoriaId == 0)
+                        {
+                            _repositorioCategorias!.Agregar(categoria, conn, tran);
+                        }
+
+                        tran.Commit();//guarda efectivamente
+                    }
+                    catch (Exception)
+                    {
+                        tran.Rollback();//tira todo pa tras!!!
+                        throw;
+                    }
+                }
+            }
         }
     }
 }

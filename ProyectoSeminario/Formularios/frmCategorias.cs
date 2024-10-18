@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProyectoSeminario.Entidades.Dtos;
+using ProyectoSeminario.Entidades.Entidades;
 using ProyectoSeminario.Servicios.Interfaces;
 using ProyectoSeminario.Windows.Helpers;
 
@@ -140,8 +141,44 @@ namespace ProyectoSeminario.Windows.Formularios
 
         private void tsbAgregar_Click(object sender, EventArgs e)
         {
-            frmCategoriasAE frm = new frmCategoriasAE();
-            frm.ShowDialog();
+            frmCategoriasAE frm = new frmCategoriasAE(_serviceProvider);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                Categoria? categoria = frm.GetCategoria();
+                if (categoria is null) return;
+                if (!_servicio!.Existe(categoria))
+                {
+                    _servicio.Guardar(categoria);
+
+
+                    totalRecords = _servicio?.GetCantidad() ?? 0;
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    currentPage = 1;
+                    LoadData();
+
+                    MessageBox.Show("Registro agregado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro existente\nAlta denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+
+            }
         }
     }
 }
