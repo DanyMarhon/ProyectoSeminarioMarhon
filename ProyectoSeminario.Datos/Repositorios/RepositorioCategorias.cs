@@ -31,7 +31,7 @@ namespace ProyectoSeminario.Datos.Repositorios
 
         public void Desactivar(Categoria categoria, int categoriaId, SqlConnection conn, SqlTransaction? tran = null)
         {
-            if (EstaRelacionada(categoriaId, conn, tran))
+            if (!EstaRelacionada(categoriaId, conn, tran))
             {
                 var updateQuery = @"UPDATE Categorias SET 
                         Activa = 0
